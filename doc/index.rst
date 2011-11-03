@@ -44,10 +44,9 @@ Configuration
 ``````````````
 
 - First you have to setup ip addresse of the Prosilica Camera by using *CLIpConfig* (camera/prosilica/sdk/CLIpConfig)
- - list of all cameras available : *CLIpConfig -l* (If you do not see any camera, that bad news!)
- - finally set ip add : *CLIpConfig -u UNIQUE_NUMBER -s -i 169.254.X.X -n 255.255.255.0 -m FIXED* (It's an example!)
-
-- Then in the Prosilica Tango device set the property *cam_ip_addresse* to the addresse previously set.
+- list of all cameras available : *CLIpConfig -l* (If you do not see any camera, that bad news!)
+- finally set ip add : *CLIpConfig -u UNIQUE_NUMBER -s -i 169.254.X.X -n 255.255.255.0 -m FIXED* (It's an example!)
+- Then in the Prosilica Tango device set the property *cam_ip_address* to the address previously set.
 
 That's all....
 
