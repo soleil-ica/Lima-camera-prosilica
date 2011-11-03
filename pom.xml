@@ -1,27 +1,54 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>fr.soleil.lib.Lima</groupId>
-		<artifactId>Camera</artifactId>
-        <version>1.1.0</version>
-    </parent>
-
-    <groupId>fr.soleil.lib.Lima.Camera</groupId>
-    <artifactId>Prosilica-${aol}-shared-${mode}</artifactId>
-
-
-    <packaging>nar</packaging>
-    <name>Prosilica</name>    <!-- use for the name of executable -->
-    <description>This module controls the Prosilica</description>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.freehep</groupId>
-                <artifactId>freehep-nar-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
-
-</project>
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>fr.soleil.lib.Lima</groupId>
+        <artifactId>Camera</artifactId>
+        <version>1.1.1</version>
+    </parent>
+
+    <groupId>fr.soleil.lib.Lima.Camera</groupId>
+    <artifactId>LimaProsilica-${aol}-shared-${mode}</artifactId>
+    <packaging>nar</packaging>
+
+    <name>LimaProsilica</name>    <!-- use for the name of executable -->
+    <description>This module controls the Prosilica Camera</description>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.freehep</groupId>
+                <artifactId>freehep-nar-plugin</artifactId>
+                <configuration>
+					<cpp>
+                        <systemIncludePaths>
+                            <systemIncludePath>./camera/prosilica/sdk/include</systemIncludePath>
+                        </systemIncludePaths>
+                        <defines>
+                            <!--<define>SOME_DEFINE</define>-->
+                        </defines>
+                        <!-- define less verbose mode for gcc-->
+                        <options>
+                            <option>-w</option>
+                        </options>
+                    </cpp>
+                    <linker>
+                        <libs>
+                            <lib>
+                                <name>PvAPI</name>
+                                <type>shared</type>
+                                <directory>./sdk/bin/x86</directory>
+                            </lib>
+                        </libs>
+                    </linker>
+                </configuration>
+            </plugin>
+
+        </plugins>
+
+    </build>
+
+
+
+</project>
+
