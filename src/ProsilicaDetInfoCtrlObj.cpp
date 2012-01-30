@@ -68,9 +68,9 @@ void DetInfoCtrlObj::setCurrImageType(ImageType curr_image_type)
   m_cam->setVideoMode(aNextMode);
 }
 
-void DetInfoCtrlObj::getPixelSize(double& pixel_size)
+void DetInfoCtrlObj::getPixelSize(double& x_size,double& y_size)
 {  
-  pixel_size = -1.;		// @todo don't know
+  x_size = y_size = -1.;		// @todo don't know
 }
 
 void DetInfoCtrlObj::getDetectorType(std::string& det_type)
