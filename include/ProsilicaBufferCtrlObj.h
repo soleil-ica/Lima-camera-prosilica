@@ -13,7 +13,7 @@ namespace lima
     class SyncCtrlObj;
     class Interface;
 
-    class BufferCtrlObj : public SoftBufferCtrlMgr
+    class BufferCtrlObj : public SoftBufferCtrlObj
     {
       friend class Interface;
       DEB_CLASS_NAMESPC(DebModCamera,"BufferCtrlObj","Prosilica");
