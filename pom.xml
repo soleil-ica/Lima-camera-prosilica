@@ -4,7 +4,7 @@
     <parent>
         <groupId>fr.soleil.lib.Lima</groupId>
         <artifactId>Camera</artifactId>
-        <version>1.1.8</version>
+        <version>1.1.9</version>
     </parent>
 
     <groupId>fr.soleil.lib.Lima.Camera</groupId>
@@ -13,6 +13,14 @@
 
     <name>LimaProsilica</name>    <!-- use for the name of executable -->
     <description>This module controls the Prosilica Camera</description>
+	
+	<dependencies>
+		<dependency>
+			<groupId>com.alliedvisiontec.lib</groupId>
+			<artifactId>ProsilicaDriver-${aol}-shared-${mode}</artifactId>
+			<version>1.24</version>
+		</dependency>
+	</dependencies>
 
     <build>
         <plugins>
@@ -21,26 +29,10 @@
                 <artifactId>freehep-nar-plugin</artifactId>
                 <configuration>
 					<cpp>
-                        <systemIncludePaths>
-                            <systemIncludePath>./camera/prosilica/sdk/include</systemIncludePath>
-                        </systemIncludePaths>
-                        <defines>
-                            <!--<define>SOME_DEFINE</define>-->
-                        </defines>
-                        <!-- define less verbose mode for gcc-->
                         <options>
                             <option>-w</option>
                         </options>
                     </cpp>
-                    <linker>
-                        <libs>
-                            <lib>
-                                <name>PvAPI</name>
-                                <type>shared</type>
-                                <directory>./sdk/bin/x86</directory>
-                            </lib>
-                        </libs>
-                    </linker>
                 </configuration>
             </plugin>
 
