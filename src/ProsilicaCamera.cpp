@@ -146,6 +146,14 @@ void Camera::setVideoMode(VideoMode aMode)
       error = PvAttrEnumSet(m_handle, "PixelFormat", "Bayer16");
       anImageType = Bpp16;
       break;
+    case RGB24:
+      error = PvAttrEnumSet(m_handle, "PixelFormat", "Rgb24");
+      anImageType = Bpp8;
+      break;
+    case BGR24:
+      error = PvAttrEnumSet(m_handle, "PixelFormat", "Bgr24");
+      anImageType = Bpp8;
+      break;
     default:
       throw LIMA_HW_EXC(InvalidValue,"This video mode is not managed!");
     }
@@ -254,6 +262,8 @@ void Camera::_newFrame(tPvFrame* aFrame)
     case ePvFmtMono16: 	mode = Y16;		break;
     case ePvFmtBayer8: 	mode = BAYER_RG8;	break;
     case ePvFmtBayer16: mode = BAYER_RG16;	break;
+    case ePvFmtRgb24:   mode = RGB24;           break;
+    case ePvFmtBgr24:   mode = BGR24;           break;
     default:
       DEB_ERROR() << "Format not supported: " << DEB_VAR1(aFrame->Format);
       m_sync->stopAcq();
