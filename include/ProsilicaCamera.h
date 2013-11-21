@@ -14,6 +14,7 @@ namespace lima
     class Camera : public HwMaxImageSizeCallbackGen
     {
       friend class Interface;
+      friend class VideoCtrlObj;
       DEB_CLASS_NAMESPC(DebModCamera,"Camera","Prosilica");
     public:
       Camera(const char*);

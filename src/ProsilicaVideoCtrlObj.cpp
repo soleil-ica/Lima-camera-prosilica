@@ -25,6 +25,8 @@ void VideoCtrlObj::getSupportedVideoMode(std::list<VideoMode> &aList) const
     {
       aList.push_back(BAYER_RG8);
       aList.push_back(BAYER_RG16);
+      aList.push_back(RGB24);
+      aList.push_back(BGR24);
     }
   else
     aList.push_back(Y16);
@@ -44,7 +46,10 @@ void VideoCtrlObj::setLive(bool flag)
 {
   m_live = flag;
   if(flag)
-    m_sync->startAcq();
+    {
+      m_cam->_allocBuffer();
+      m_sync->startAcq();
+    }
   else
     m_sync->stopAcq();
 }
