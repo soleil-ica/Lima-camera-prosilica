@@ -12,6 +12,7 @@ namespace lima
     class BufferCtrlObj;
     class VideoCtrlObj;
     class SyncCtrlObj;
+    class BinCtrlObj;
 
     class Interface : public HwInterface
     {
@@ -37,6 +38,7 @@ namespace lima
       BufferCtrlObj* 	m_buffer;
       VideoCtrlObj* 	m_video;
       SyncCtrlObj* 	m_sync;
+      BinCtrlObj*       m_bin;
     };
 
   } // namespace Prosilica

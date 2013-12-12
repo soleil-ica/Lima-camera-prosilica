@@ -1,5 +1,5 @@
 prosilica-objs = ProsilicaBufferCtrlObj.o ProsilicaCamera.o ProsilicaInterface.o \
-		 ProsilicaSyncCtrlObj.o  ProsilicaVideoCtrlObj.o ProsilicaDetInfoCtrlObj.o
+		 ProsilicaSyncCtrlObj.o  ProsilicaVideoCtrlObj.o  ProsilicaBinCtrlObj.o ProsilicaDetInfoCtrlObj.o
 
 SRCS = $(prosilica-objs:.o=.cpp) 
 
