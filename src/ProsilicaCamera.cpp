@@ -16,7 +16,8 @@ using namespace lima::Prosilica;
 Camera::Camera(const char *ip_addr) :
   m_cam_connected(false),
   m_sync(NULL),
-  m_video(NULL)
+  m_video(NULL),
+  m_bin(1,1)
 {
   DEB_CONSTRUCTOR();
   // Init Frames
@@ -50,6 +51,11 @@ Camera::Camera(const char *ip_addr) :
 
   DEB_TRACE() << DEB_VAR2(m_maxwidth,m_maxheight);
 
+
+  Bin tmp_bin(1, 1);
+
+  setBin(tmp_bin); // Bin has to be (1,1) for allowing maximum values as width and height
+
   error = PvAttrUint32Set(m_handle,"Width",m_maxwidth);
   if(error)
     throw LIMA_HW_EXC(Error,"Can't set image width");
@@ -58,6 +64,8 @@ Camera::Camera(const char *ip_addr) :
   if(error)
     throw LIMA_HW_EXC(Error,"Can't set image height");
   
+
+
   VideoMode localVideoMode;
   if(isMonochrome())
     {
@@ -276,4 +284,59 @@ void Camera::_newFrame(tPvFrame* aFrame)
 					  mode);
   if(stopAcq || !m_continue_acq)
     m_sync->stopAcq(false);
+}
+
+//-----------------------------------------------------
+// @brief range the binning to the maximum allowed
+//-----------------------------------------------------
+void Camera::checkBin(Bin &hw_bin)
+{
+    DEB_MEMBER_FUNCT();
+
+
+    int x = hw_bin.getX();
+    if(x > m_maxwidth)
+        x = m_maxwidth;
+
+    int y = hw_bin.getY();
+    if(y > m_maxheight)
+        y = m_maxheight;
+
+    hw_bin = Bin(x,y);
+    DEB_RETURN() << DEB_VAR1(hw_bin);
+}
+//-----------------------------------------------------
+// @brief set the new binning mode
+//-----------------------------------------------------
+void Camera::setBin(const Bin &set_bin)
+{
+    DEB_MEMBER_FUNCT();
+
+    PvAttrUint32Set(m_handle, "BinningX", set_bin.getX());
+    PvAttrUint32Set(m_handle, "BinningY", set_bin.getY());
+
+    m_bin = set_bin;
+    
+    DEB_RETURN() << DEB_VAR1(set_bin);
+}
+
+//-----------------------------------------------------
+// @brief return the current binning mode
+//-----------------------------------------------------
+void Camera::getBin(Bin &hw_bin)
+{
+    DEB_MEMBER_FUNCT(); 
+
+    tPvUint32 xValue; 
+    tPvUint32 yValue;  
+
+    PvAttrUint32Get(m_handle,"BinningX",&xValue); 
+    PvAttrUint32Get(m_handle,"BinningY",&yValue);
+
+    Bin tmp_bin(xValue, yValue);
+    
+    hw_bin = tmp_bin;
+    m_bin = tmp_bin;
+    
+    DEB_RETURN() << DEB_VAR1(hw_bin);
 }
