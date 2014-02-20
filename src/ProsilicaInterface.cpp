@@ -4,6 +4,7 @@
 #include "ProsilicaBufferCtrlObj.h"
 #include "ProsilicaVideoCtrlObj.h"
 #include "ProsilicaSyncCtrlObj.h"
+#include "ProsilicaBinCtrlObj.h"
 
 using namespace lima;
 using namespace lima::Prosilica;
@@ -29,6 +30,8 @@ Interface::Interface(Camera *cam) :
   m_sync = new SyncCtrlObj(cam,m_video ? NULL : m_buffer);
   cam->m_sync = m_sync;
 
+  m_bin = new BinCtrlObj(cam);
+
   if(m_buffer)
     m_buffer->m_sync = m_sync;
   if(m_video)
@@ -46,12 +49,14 @@ Interface::~Interface()
     delete m_buffer;
   delete m_det_info;
   delete m_sync;
+  delete m_bin;
 }
 
 void Interface::getCapList(CapList &cap_list) const
 {
   cap_list.push_back(HwCap(m_sync));
   cap_list.push_back(HwCap(m_det_info));
+  cap_list.push_back(HwCap(m_bin));
   if(m_video)
     { 
       cap_list.push_back(HwCap(m_video));
