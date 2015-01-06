@@ -3,8 +3,8 @@
 
 #include "Prosilica.h"
 
-#include "HwSyncCtrlObj.h"
-#include "HwInterface.h"
+#include "lima/HwSyncCtrlObj.h"
+#include "lima/HwInterface.h"
 
 namespace lima
 {

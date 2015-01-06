@@ -1,7 +1,7 @@
 #ifndef PROSILICAVIDEOCTRLOBJ_H
 #define PROSILICAVIDEOCTRLOBJ_H
 #include "Prosilica.h"
-#include "HwVideoCtrlObj.h"
+#include "lima/HwVideoCtrlObj.h"
 
 namespace lima
 {

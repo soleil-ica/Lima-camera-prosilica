@@ -3,7 +3,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-#include "Exceptions.h"
+#include "lima/Exceptions.h"
 
 #include "ProsilicaCamera.h"
 #include "ProsilicaSyncCtrlObj.h"

@@ -22,7 +22,7 @@
 #ifndef PROSILICABINCTRLOBJ_H
 #define PROSILICABINCTRLOBJ_H
 
-#include "HwInterface.h"
+#include "lima/HwInterface.h"
 #include "ProsilicaCamera.h"
 
 namespace lima
