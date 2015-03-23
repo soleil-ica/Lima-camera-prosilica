@@ -1,3 +1,4 @@
+#include <signal.h>
 #include <cstdlib>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -20,6 +21,11 @@ Camera::Camera(const char *ip_addr) :
   m_bin(1,1)
 {
   DEB_CONSTRUCTOR();
+  //Tango signal management is a real shit (workaround)
+  sigset_t signals;
+  sigfillset(&signals);
+  sigprocmask(SIG_UNBLOCK,&signals,NULL);
+
   // Init Frames
   m_frame[0].ImageBuffer = NULL;
   m_frame[0].Context[0] = this;
