@@ -3,7 +3,7 @@
 
 #include "Prosilica.h"
 
-#include "HwBufferMgr.h"
+#include "lima/HwBufferMgr.h"
 
 namespace lima
 {

@@ -1,9 +1,9 @@
 #ifndef PROSILICACAMERA_H
 #define PROSILICACAMERA_H
 #include "Prosilica.h"
-#include "Debug.h"
-#include "Constants.h"
-#include "HwMaxImageSizeCallback.h"
+#include "lima/Debug.h"
+#include "lima/Constants.h"
+#include "lima/HwMaxImageSizeCallback.h"
 
 namespace lima
 {

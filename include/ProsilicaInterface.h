@@ -1,7 +1,7 @@
 #ifndef PROSILICAINTERFACE_H
 #define PROSILICAINTERFACE_H
 
-#include "HwInterface.h"
+#include "lima/HwInterface.h"
 
 namespace lima
 {
