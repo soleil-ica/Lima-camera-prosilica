@@ -262,7 +262,7 @@ void Camera::_newFrame(tPvFrame* aFrame)
   bool stopAcq = false;
   if(isLive || !requested_nb_frames || m_acq_frame_nb < (requested_nb_frames - 1))
     {
-      if(isLive || requested_nb_frames ||
+      if(isLive || !requested_nb_frames ||
 	 m_acq_frame_nb < (requested_nb_frames - 2))
 	tPvErr error = PvCaptureQueueFrame(m_handle,aFrame,_newFrameCBK);
     }
