@@ -17,7 +17,7 @@ namespace lima
       friend class VideoCtrlObj;
       DEB_CLASS_NAMESPC(DebModCamera,"Camera","Prosilica");
     public:
-      Camera(const char*);
+      Camera(const char*,bool master = true);
       ~Camera();
       
       bool isMonochrome() const;
@@ -37,6 +37,8 @@ namespace lima
 	
       void 	startAcq();
       void	reset();
+
+      bool		m_as_master;
 
     private:
       void 		_allocBuffer();

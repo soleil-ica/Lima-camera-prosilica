@@ -15,6 +15,8 @@ SyncCtrlObj::SyncCtrlObj(Camera *cam,BufferCtrlObj *buffer) :
   m_started(false)
 {
   DEB_CONSTRUCTOR();
+  m_access_mode = cam->m_as_master ? 
+    HwSyncCtrlObj::Master : HwSyncCtrlObj::Monitor;
 }
 
 SyncCtrlObj::~SyncCtrlObj()
@@ -152,10 +154,12 @@ void SyncCtrlObj::startAcq()
       tPvErr error = PvCaptureStart(m_handle);
       if(error)
 	throw LIMA_HW_EXC(Error,"Can't start acquisition capture");
-
-      error = PvCommandRun(m_handle, "AcquisitionStart");
-      if(error)
-	throw LIMA_HW_EXC(Error,"Can't start acquisition");
+      if(m_cam->m_as_master)
+	{
+	  error = PvCommandRun(m_handle, "AcquisitionStart");
+	  if(error)
+	    throw LIMA_HW_EXC(Error,"Can't start acquisition");
+	}
   
       if(m_buffer)
 	m_buffer->startAcq();
