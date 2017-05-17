@@ -2,3 +2,6 @@
 sdk/CLIpConfig
 sdk/libPvAPI.so
 *target*
+CMakeFiles
+*.cmake
+

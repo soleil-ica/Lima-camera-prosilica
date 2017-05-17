@@ -35,8 +35,11 @@ The minimum configuration file is *config.inc* :
          COMPILE_ESPIA COMPILE_FRELON COMPILE_MAXIPIX COMPILE_PILATUS \
          COMPILE_BASLER COMPILE_PROSILICA COMPILE_CBF_SAVING
 
+  start the compilation :ref:`linux_compilation`
 
--  start the compilation :ref:`linux_compilation`
+
+
+
 
 -  finally for the Tango server installation :ref:`tango_installation`
 
