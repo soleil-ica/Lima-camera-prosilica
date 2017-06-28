@@ -21,45 +21,37 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, see <http://www.gnu.org/licenses/>.
 ############################################################################
+set(NAME "prosilica")
 
 set (PROSILICA_SDK_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/sdk" CACHE PATH "location of prosilica sdk")
 set(CMAKE_SHARED_LINKER_FLAGS "-Wl,--add-needed")
 
 
-# library path for prosilica
-set(PROSILICA_LIB_DIR "${PROSILICA_SDK_ROOT}/bin/x64" CACHE PATH "location of prosilica lib")
-
-
-link_directories(${PROSILICA_LIB_DIR})
-
 #SOURCEs
-set(prosilica_srcs src/ProsilicaCamera.cpp  src/ProsilicaInterface.cpp
+set(${NAME}_srcs src/ProsilicaCamera.cpp  src/ProsilicaInterface.cpp
 	 src/ProsilicaDetInfoCtrlObj.cpp src/ProsilicaSyncCtrlObj.cpp
 	 src/ProsilicaBinCtrlObj.cpp src/ProsilicaBufferCtrlObj.cpp
 	 src/ProsilicaVideoCtrlObj.cpp)
 
-file(STRINGS "VERSION" prosilica_vers)
-add_library(limaprosilica SHARED ${prosilica_srcs})
+add_library(lima${NAME} SHARED ${${NAME}_srcs})
 
 #INCLUDEs
-target_include_directories(limaprosilica PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
-target_include_directories(limaprosilica PUBLIC "${PROSILICA_SDK_ROOT}/include")
+target_include_directories(lima${NAME} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
+target_include_directories(lima${NAME} PUBLIC "${PROSILICA_SDK_ROOT}/include")
 
 #LIBRARY
-find_library(PROSILICA_LIB_BASE PvAPI ${PROSILICA_LIB_DIR})
-if (("${PROSILICA_LIB_BASE}" STREQUAL "PROSILICA_LIB_BASE-NOTFOUND"))
-  message(FATAL_ERROR "prosilica : libPvAPI not found, you can search it in cmake-gui or try to install it if it isn't here.")
+find_library(PROSILICA_PVAPI_LIB PvAPI "${PROSILICA_SDK_ROOT}/bin/x64")
+if (("${PROSILICA_PVAPI_LIB}" STREQUAL "PROSILICA_PVAPI_LIB-NOTFOUND"))
+  message(FATAL_ERROR "${NAME} : libPvAPI not found, you can search it in cmake-gui or try to install it if it isn't here.")
 endif()
 
-target_link_libraries(limaprosilica limacore)
-target_link_libraries(limaprosilica ${PROSILICA_LIB_BASE})
+target_link_libraries(lima${NAME} limacore)
+target_link_libraries(lima${NAME} ${PROSILICA_PVAPI_LIB})
 
-set_target_properties(limaprosilica PROPERTIES VERSION ${prosilica_vers} SOVERSION "1")
+include(CameraVERSION)
+install(TARGETS lima${NAME} LIBRARY DESTINATION lib)
 
-install(TARGETS limaprosilica LIBRARY DESTINATION lib)
-
-if(COMPILE_SIP)
-    set(NAME "prosilica")
+if(LIMA_ENABLE_PYTHON)
 	include(CameraRunSIP)
     install(FILES python/__init__.py DESTINATION "${PYTHON_SITE_PACKAGES_DIR}/Lima/Prosilica")
 endif()
