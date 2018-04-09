@@ -15,51 +15,30 @@ The Lima module as been tested with color and B/W GigE camera.
 Installation & Module configuration
 ````````````````````````````````````
 
--  follow first the steps for the linux installation :ref:`linux_installation`
-
-The minimum configuration file is *config.inc* :
+Follow the generic instructions in :ref:`build_installation`. If using CMake directly, add the following flag:
 
 .. code-block:: sh
 
-  COMPILE_CORE=1
-  COMPILE_SIMULATOR=0
-  COMPILE_SPS_IMAGE=1
-  COMPILE_ESPIA=0
-  COMPILE_FRELON=0
-  COMPILE_MAXIPIX=0
-  COMPILE_PILATUS=0
-  COMPILE_BASLER=0
-  COMPILE_PROSILICA=1
-  COMPILE_CBF_SAVING=0
-  export COMPILE_CORE COMPILE_SPS_IMAGE COMPILE_SIMULATOR \
-         COMPILE_ESPIA COMPILE_FRELON COMPILE_MAXIPIX COMPILE_PILATUS \
-         COMPILE_BASLER COMPILE_PROSILICA COMPILE_CBF_SAVING
+ -DLIMACAMERA_PROSILICA=true
 
-  start the compilation :ref:`linux_compilation`
-
-
-
-
-
--  finally for the Tango server installation :ref:`tango_installation`
+For the Tango server installation, refers to :ref:`tango_installation`.
 
 Initialisation and Capabilities
 ````````````````````````````````
+Implementing a new plugin for new detector is driven by the LIMA framework but the developer has some freedoms to choose which standard and specific features will be made available. This section is supposed to give you good knowledge regarding camera features within the LIMA framework.
 
 Camera initialisation
-......................
+.....................
 
-The camera will be initialized   by creating a Prosilica::Camera object.  The Camera contructor
-sets the camera with default parameters, only the ip address or hostname of the camera is mandatory.
+The camera will be initialized by creating a :cpp::class:`Prosilica::Camera` object. The contructor sets the camera with default parameters, only the ip address or hostname of the camera is mandatory.
 
-Std capabilites
+Std capabilities
 ................
 
-This plugin has been implement in respect of the mandatory capabilites but with some limitations which
-are due to the camera and SDK features. Only restriction on capabilites are documented here.
+This plugin has been implemented in respect of the mandatory capabilites but with some limitations which are due to the camera and SDK features. Only restriction on capabilites are documented here.
 
 * HwDetInfo
-  
+
   getCurrImageType/getDefImageType(): it can change if the video mode change (see HwVideo capability).
 
   setCurrImageType(): It only supports Bpp8 and Bpp16.
@@ -67,40 +46,39 @@ are due to the camera and SDK features. Only restriction on capabilites are docu
 * HwSync
 
   get/setTrigMode(): the only supported mode are IntTrig, IntTrigMult and ExtTrigMult.
-  
-  
 
-Optional capabilites
-........................
+Optional capabilities
+.....................
+
 In addition to the standard capabilities, we make the choice to implement some optional capabilities which
 are supported by the SDK. Video and Binning are available.
 
 * HwVideo
 
-  The prosilica cameras are pure video device, so video format for image are supported:
-   
-  **Color cameras ONLY** 
+  The prosilica cameras are pure video devices, so only video format for image are supported:
+
+  **Color cameras ONLY**
    - BAYER_RG8
    - BAYER_RG16
    - RGB24
    - BGR24
-   
+
   **Color and Monochrome cameras**
-   - Y8   
+   - Y8
 
-  Use get/setMode() methods of the *video* object (i.e. CtControl::video()) to read or set the format.
+  Use get/setMode() methods of the cpp::class::`Video` object (i.e. CtControl::video()) to read or set the format.
 
-* HwBin 
+* HwBin
 
   There is no restriction for the binning up to the maximum size.
 
 Configuration
 ``````````````
 
-- First you have to setup ip address of the Prosilica Camera by using *CLIpConfig* (camera/prosilica/sdk/CLIpConfig)
-- list of all cameras available : *CLIpConfig -l* (If you do not see any camera, that bad news!)
-- finally set ip add : *CLIpConfig -u UNIQUE_NUMBER -s -i 169.254.X.X -n 255.255.255.0 -m FIXED* (It's an example!)
-- Then in the Prosilica Tango device set the property *cam_ip_address* to the address previously set.
+- First you have to setup ip address of the Prosilica Camera with ``CLIpConfig`` located in ``camera/prosilica/sdk/CLIpConfig``
+- list of all cameras available : ``CLIpConfig -l`` (If you do not see any camera, that's bad news!)
+- finally set ip add : ``CLIpConfig -u UNIQUE_NUMBER -s -i 169.254.X.X -n 255.255.255.0 -m FIXED`` (It's an example!)
+- Then in the Prosilica Tango device set the property ``cam_ip_address`` to the address previously set.
 
 That's all....
 
@@ -128,7 +106,7 @@ This is a python code example for a simple test:
   video.stopLive()
   video_img = video.getLastImage()
 
-  # set and test acquisition 
+  # set and test acquisition
 
   # setting new file parameters and autosaving mode
   saving=ct.saving()
@@ -142,7 +120,7 @@ This is a python code example for a simple test:
   saving.setParameters(pars)
 
   acq.setAcqExpoTime(0.1)
-  acq.setNbImages(10) 
+  acq.setNbImages(10)
   ct.prepareAcq()
   ct.startAcq()
 
@@ -151,6 +129,6 @@ This is a python code example for a simple test:
   while lastimg !=9:
     time.sleep(0.01)
     lastimg = ct.getStatus().ImageCounters.LastImageReady
- 
+
   # read the first image
   im0 = ct.ReadImage(0)
