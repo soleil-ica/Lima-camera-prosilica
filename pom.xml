@@ -9,7 +9,7 @@
 
     <groupId>fr.soleil.lib.Lima.Camera</groupId>
     <artifactId>LimaProsilica-${aol}-shared-${mode}</artifactId>
-    <version>1.4.8</version>
+    <version>1.4.9</version>
     
     <packaging>nar</packaging>
     <name>LimaProsilica</name>
@@ -25,8 +25,15 @@
         <dependency>
             <groupId>fr.soleil.lib</groupId>
             <artifactId>LimaCore-${aol}-shared-${mode}</artifactId>
-            <version>1.7.9</version>
+            <version>1.7.10</version>
         </dependency>
+		
+		<!-- add NexusCPP and force to 3.3.6 to avoid getting 3.3.7 (don't know why ...) -->
+		<dependency>
+			<groupId>fr.soleil.lib</groupId>
+			<artifactId>NexusCPP-${aol}-shared-${mode}</artifactId>
+			<version>3.3.6</version>
+		</dependency>
         
         <dependency>
             <groupId>com.alliedvisiontec.lib</groupId>
